@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TextField, Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 
 class AddTodo extends Component {
   constructor() {
@@ -18,11 +18,7 @@ class AddTodo extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     if (this.state.content.trim()) {
-      this.props.addTodo({
-        id: Math.random(),
-        text: this.state.content,
-        completed: false,
-      });
+      this.props.addTodo(this.state);
       this.setState({
         content: "",
       });
@@ -31,24 +27,22 @@ class AddTodo extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <div>
         <TextField
           label="Add New Item"
           variant="outlined"
           onChange={this.handleChange}
           value={this.state.content}
-          data-testid="new-item-textfield"
         />
         <Button
           style={{ marginLeft: "10px" }}
+          onClick={this.handleSubmit}
           variant="contained"
           color="primary"
-          type="submit"
-          data-testid="new-item-button"
         >
           Add
         </Button>
-      </form>
+      </div>
     );
   }
 }

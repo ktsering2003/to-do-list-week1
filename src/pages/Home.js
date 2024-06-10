@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import AddTodo from '../components/AddTodo';
-import Todos from '../components/Todos';
+import { Container, Typography, Paper, Box, Grid } from "@mui/material";
+import AddTodo from "../component/AddTodo"; // Correct path
+import Todos from "../component/todos"; // Correct path (case-sensitive)
 import './Home.css';
 
 class Home extends Component {
@@ -12,28 +13,44 @@ class Home extends Component {
   }
 
   addTodo = (todo) => {
+    todo.id = Math.random();
     let new_list = [...this.state.todos, todo];
     this.setState({
       todos: new_list,
     });
   };
 
-  toggleComplete = (id) => {
-    const updatedTodos = this.state.todos.map((todo) => {
-      if (todo.id === id) {
-        todo.completed = !todo.completed;
-      }
-      return todo;
-    });
-    this.setState({ todos: updatedTodos });
-  };
-
   render() {
     return (
-      <div className="Home">
-        <h1>Todo List</h1>
-        <AddTodo addTodo={this.addTodo} />
-        <Todos todos={this.state.todos} toggleComplete={this.toggleComplete} />
+      <div className="home-wrapper">
+        <Box className="hero-section">
+          <Typography variant="h2" className="hero-title">
+            Welcome to Your To-Do List
+          </Typography>
+          <Typography variant="h5" className="hero-subtitle">
+            Organize your tasks efficiently
+          </Typography>
+        </Box>
+        <Container className="home-container">
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Paper elevation={3} className="todo-paper">
+                <Typography variant="h4" gutterBottom>
+                  Add a New Task
+                </Typography>
+                <AddTodo addTodo={this.addTodo} />
+              </Paper>
+            </Grid>
+            <Grid item xs={12}>
+              <Paper elevation={3} className="todo-paper">
+                <Typography variant="h4" gutterBottom>
+                  Your Tasks
+                </Typography>
+                <Todos todos={this.state.todos} />
+              </Paper>
+            </Grid>
+          </Grid>
+        </Container>
       </div>
     );
   }
