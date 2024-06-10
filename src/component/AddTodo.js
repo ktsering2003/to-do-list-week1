@@ -1,41 +1,56 @@
-import React, { useState } from 'react';
-import { TextField, Button } from '@mui/material';
+import React, { Component } from "react";
+import { TextField, Button } from "@mui/material";
 
-function AddTodo ({ addTodo }) {
-  const [input, setInput] = useState('');
+class AddTodo extends Component {
+  constructor() {
+    super();
+    this.state = {
+      content: "",
+    };
+  }
 
-  const handleSubmit = (event) => {
+  handleChange = (event) => {
+    this.setState({
+      content: event.target.value,
+    });
+  };
+
+  handleSubmit = (event) => {
     event.preventDefault();
-    if (input.trim()) {
-      addTodo({
+    if (this.state.content.trim()) {
+      this.props.addTodo({
         id: Math.random(),
-        text: input,
-        completed: false
+        text: this.state.content,
+        completed: false,
       });
-      setInput('');
+      this.setState({
+        content: "",
+      });
     }
   };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <TextField 
-        label="Add New Item" 
-        variant="outlined" 
-        onChange={e => setInput(e.target.value)} 
-        value={input}
-        data-testid="new-item-textfield"
-      />
-      <Button
-        style={{ marginLeft: "10px" }}
-        variant="contained"
-        color="primary"
-        type="submit"
-        data-testid="new-item-button"
-      >
-        Add
-      </Button>
-    </form>
-  );
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <TextField
+          label="Add New Item"
+          variant="outlined"
+          onChange={this.handleChange}
+          value={this.state.content}
+          data-testid="new-item-textfield"
+        />
+        <Button
+          style={{ marginLeft: "10px" }}
+          variant="contained"
+          color="primary"
+          type="submit"
+          data-testid="new-item-button"
+        >
+          Add
+        </Button>
+      </form>
+    );
+  }
 }
 
 export default AddTodo;

@@ -1,28 +1,42 @@
-import React, { useState } from 'react';
-import Todos from '../components/Todos';
+import React, { Component } from "react";
 import AddTodo from '../components/AddTodo';
+import Todos from '../components/Todos';
 import './Home.css';
 
-function Home() {
-  const [todos, setTodos] = useState([]);
+class Home extends Component {
+  constructor() {
+    super();
+    this.state = {
+      todos: [],
+    };
+  }
 
-  const addTodo = (todo) => {
-    setTodos([...todos, todo]);
+  addTodo = (todo) => {
+    let new_list = [...this.state.todos, todo];
+    this.setState({
+      todos: new_list,
+    });
   };
 
-  const toggleComplete = (id) => {
-    setTodos(todos.map(todo => 
-      todo.id === id ? { ...todo, completed: !todo.completed } : todo
-    ));
+  toggleComplete = (id) => {
+    const updatedTodos = this.state.todos.map((todo) => {
+      if (todo.id === id) {
+        todo.completed = !todo.completed;
+      }
+      return todo;
+    });
+    this.setState({ todos: updatedTodos });
   };
 
-  return (
-    <div className="home">
-      <h1>Todo List</h1>
-      <AddTodo addTodo={addTodo} />
-      <Todos todos={todos} toggleComplete={toggleComplete} />
-    </div>
-  );
+  render() {
+    return (
+      <div className="Home">
+        <h1>Todo List</h1>
+        <AddTodo addTodo={this.addTodo} />
+        <Todos todos={this.state.todos} toggleComplete={this.toggleComplete} />
+      </div>
+    );
+  }
 }
 
 export default Home;
