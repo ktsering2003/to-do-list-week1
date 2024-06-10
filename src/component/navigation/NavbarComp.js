@@ -1,40 +1,22 @@
-import React, { Component } from "react";
-import {Navbar, Nav, Container} from 'react-bootstrap'
+import React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import { Link } from 'react-router-dom';
 
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route, 
-    Link
-} from "react-router-dom"
-import About from "../../pages/About";
-import Home from "../../pages/Home";
-
-export default class NavbarComp extends Component {
-    render() {
-        return (
-            <Router>
-            <div>
-            <Navbar bg="dark" variant={"dark"} expand="lg">
-                <Container>
-                    {/* <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand> */}
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
-                        <Nav.Link as={Link} to={"/"}> Home </Nav.Link>
-                        <Nav.Link as={Link} to={"/about"}>About</Nav.Link>
-                    </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
-            </div>
-            <div>
-                <Routes>
-                <Route exact path="/" element={<Home/>}/>
-                <Route exact path="/about" element={<About/>}/>
-                </Routes>
-            </div>
-            </Router>
-        )
-    }
+function NavbarComp() {
+  return (
+    <AppBar position="static">
+      <Toolbar>
+        <Typography variant="h6">
+          <Link to="/" style={{ color: 'inherit', textDecoration: 'none' }}>Home</Link>
+        </Typography>
+        <Typography variant="h6" style={{ marginLeft: '20px' }}>
+          <Link to="/about" style={{ color: 'inherit', textDecoration: 'none' }}>About</Link>
+        </Typography>
+      </Toolbar>
+    </AppBar>
+  );
 }
+
+export default NavbarComp;
